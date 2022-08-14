@@ -1,3 +1,5 @@
 void call(){
-    println "TODO implement here sonarqube static code analysis"
+    stage("SonarQube Analysis"){
+        println "TODO implement here sonarqube static code analysis"
+    }
 }
