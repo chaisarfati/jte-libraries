@@ -4,7 +4,7 @@ void call(){
         sh("ls")
         node {
     		checkout scm
-    		docker.image('golang:1.19.0-alpine3.16') { c ->
+    		docker.image('golang:1.19.0-alpine3.16').withRun() { c ->
 			sh 'ls' 
 		}
 	}
