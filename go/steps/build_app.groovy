@@ -12,6 +12,7 @@ void call(){
     		}
 
     	}
+    }
 	
     stage("Go: Test"){
         sh("go test")
