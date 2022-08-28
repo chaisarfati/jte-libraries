@@ -7,19 +7,17 @@ void call(){
 		println "Listing directory content in container"
 		sh("ls")
         	echo "Before running go build command"
-		sh("go build")
+		//sh("go build")
 		sh("mkdir afterBuild")
     	}
 	sh("ls")
     }
 	
     stage("Go: Test"){
-        node{
-		checkout scm
-    		withDockerContainer(image: 'golang:latest'){
-        		echo "Running go test command"
-			sh("go test")
-    		}
+	checkout scm
+    	withDockerContainer(image: 'golang:latest'){
+        	echo "Running go test command"
+		sh("go test")
     	}
     }
 }
