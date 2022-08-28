@@ -8,13 +8,19 @@ void call(){
     		withDockerContainer(image: 'golang:latest'){
         		echo "Before running go build command"
 			sh("go build")
-			echo "After running go build command"
+			sh("mkdir afterBuild")
     		}
-
+		sh("ls")
     	}
     }
 	
     stage("Go: Test"){
-        sh("go test")
+        node{
+		checkout scm
+    		withDockerContainer(image: 'golang:latest'){
+        		echo "Running go test command"
+			sh("go test")
+    		}
+    	}
     }
 }
