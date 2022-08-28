@@ -14,7 +14,12 @@ void call(){
     }
 	
     stage("Go: Test"){
+	println "Listing directory content before checkout"
+        sh("ls")
 	checkout scm
+	println "Listing directory content after checkout"
+        sh("ls")
+
     	withDockerContainer(image: 'golang:latest'){
         	echo "Running go test command"
 		sh("go test")
