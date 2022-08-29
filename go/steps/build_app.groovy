@@ -3,12 +3,11 @@ void call(){
 	println "Printing config variable :\n" + config
         println "Listing directory content"
         sh("ls")
-    	withDockerContainer(image: 'golang:latest'){
+    	withDockerContainer(args:'GOCACHE=off' ,image: 'golang:1.19.0-alpine'){
 		println "Listing directory content in container"
 		sh("ls")
         	echo "Before running go build command"
-		//sh("go build")
-		sh("mkdir afterBuild")
+		sh("go build")
     	}
 	sh("ls")
     }
@@ -20,7 +19,7 @@ void call(){
 	println "Listing directory content after checkout"
         sh("ls")
 
-    	withDockerContainer(image: 'golang:latest'){
+    	withDockerContainer(args:'GOCACHE=off' ,image: 'golang:1.19.0-alpine'){
         	echo "Running go test command"
 		sh("go test")
     	}
