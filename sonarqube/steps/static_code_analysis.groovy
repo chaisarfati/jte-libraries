@@ -1,5 +1,8 @@
 void call(){
     stage("SonarQube Analysis"){
-        println "TODO implement here sonarqube static code analysis"
-    }
+        println "Starting sonarqube static code analysis"
+        def scannerHome = tool 'SonarScanner';
+        withSonarQubeEnv() {
+            sh "${scannerHome}/bin/sonar-scanner"
+        }
 }
