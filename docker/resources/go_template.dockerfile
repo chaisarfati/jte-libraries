@@ -4,7 +4,6 @@ FROM golang:1.17-alpine
 # Arguments of this Dockerfile
 ARG MONGODB_USER
 ARG MONGODB_PASSWORD
-ARG EXECUTABLE_NAME
 
 # Set necessary environmet variables needed for our image
 ENV GO111MODULE=on \
@@ -27,17 +26,17 @@ RUN go mod download
 COPY . .
 
 # Build the application
-RUN go build -o $EXECUTABLE_NAME .
+RUN go build -o main .
 
 
 # Move to /dist directory as the place for resulting binary folder
 WORKDIR /dist
 
 # Copy binary from build to main folder
-RUN cp /build/$EXECUTABLE_NAME .
+RUN cp /build/main .
 
 # Export necessary port
 EXPOSE 8080
 
 # Command to run when starting the container
-CMD ["/dist/${EXECUTABLE_NAME}"]
+CMD ["/dist/main"]
