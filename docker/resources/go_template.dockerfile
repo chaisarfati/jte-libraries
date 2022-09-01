@@ -1,36 +1,43 @@
-FROM golang:1.17-alpine as builder
+FROM golang:1.17-alpine
+
 
 # Arguments of this Dockerfile
 ARG MONGODB_USER
 ARG MONGODB_PASSWORD
 ARG EXECUTABLE_NAME
 
-# Set destination for COPY
-WORKDIR /app
+# Set necessary environmet variables needed for our image
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64 \
+    MONGODB_USER=$MONGODB_USER \
+    MONGODB_PASSWORD=$MONGODB_PASSWORD \
+    MONGODB_AUTH_DB=
 
-# Retrieve application dependencies.
-# This allows the container build to reuse cached dependencies.
-# Expecting to copy go.mod and if present go.sum.
-COPY go.* ./
+# Move to working directory /build
+WORKDIR /build
+
+# Copy and download dependency using go mod
+COPY go.mod .
+COPY go.sum .
 RUN go mod download
 
-# Copy local code to the container image.
-COPY . ./
+# Copy the code into the container
+COPY . .
 
-# Build
-RUN go mod tidy
-RUN go build -o ${EXECUTABLE_NAME}
+# Build the application
+RUN go build -o $EXECUTABLE_NAME .
 
 
-# Use the official Debian slim image for a lean production container
-FROM debian:buster-slim
-RUN set -x && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    ca-certificates && \
-    rm -rf /var/lib/apt/lists/*
+# Move to /dist directory as the place for resulting binary folder
+WORKDIR /dist
 
-# Copy the binary to the production image from the builder stage.
-COPY --from=builder /app/${EXECUTABLE_NAME} /app/${EXECUTABLE_NAME}
+# Copy binary from build to main folder
+RUN cp /build/$EXECUTABLE_NAME .
 
-# Run the web service on container startup.
-CMD ["/app/${EXECUTABLE_NAME}"]
+# Export necessary port
+EXPOSE 8080
 
+# Command to run when starting the container
+CMD ["/dist/${EXECUTABLE_NAME}"]
