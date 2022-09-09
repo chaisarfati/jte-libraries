@@ -1,6 +1,4 @@
 void call(){
-	
-    checkout scm
     ls()
 	
     stage("Go: Build"){
