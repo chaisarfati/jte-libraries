@@ -17,7 +17,6 @@ void call(){
                 sh("echo sonar.junit.reportsPath=target/surefire-reports >> sonar-project.properties")
                 sh("echo sonar.surefire.reportsPath=target/surefire-reports >> sonar-project.properties")
                 sh("echo sonar.jacoco.reportPath=target/jacoco.exec >> sonar-project.properties")
-                sh("echo sonar.java.binaries=target/classes >> sonar-project.properties")
                 sh("echo sonar.java.coveragePlugin=jacoco >> sonar-project.properties")
                                 sh("${scannerHome}/bin/sonar-scanner")
 
