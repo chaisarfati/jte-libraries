@@ -1,5 +1,7 @@
 void call(){
     stage("Maven: Build"){
-        println "TODO Implement here a maven build"
+        withDockerContainer("maven:3.5.0-jdk-8-alpine") { 
+            sh("mvn clean install")
+        }
     }
 }
