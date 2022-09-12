@@ -1,17 +1,17 @@
+final String GOLANG_IMAGE = "golang:latest"
+final String GOLANG_CONTAINER_ARGUMENT = "-e GOCACHE=/tmp/"
+
 void call(){
     ls()
 	
     stage("Go: Build"){
-    	withDockerContainer(args:'-e GOCACHE=/tmp/' ,image: 'golang:latest'){
-        	echo "Running go build command"
+    	withDockerContainer(args: GOLANG_CONTAINER_ARGUMENT ,image: GOLANG_IMAGE){
 		sh("go build")
     	}
     }
 	
     stage("Go: Test"){
-
-    	withDockerContainer(args:'-e GOCACHE=/tmp/' ,image: 'golang:latest'){
-        	echo "Running go test command"
+    	withDockerContainer(args: GOLANG_CONTAINER_ARGUMENT ,image: GOLANG_IMAGE){
 		sh("go test")
     	}
     }
