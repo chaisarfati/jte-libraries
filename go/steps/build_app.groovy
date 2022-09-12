@@ -1,5 +1,5 @@
-final String GOLANG_IMAGE = "golang:latest"
-final String GOLANG_CONTAINER_ARGUMENT = "-e GOCACHE=/tmp/"
+@Field final String GOLANG_IMAGE = "golang:latest"
+@Field final String GOLANG_CONTAINER_ARGUMENT = "-e GOCACHE=/tmp/"
 
 void call(){
     ls()
