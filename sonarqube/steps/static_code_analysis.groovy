@@ -10,7 +10,7 @@ void call(){
         echo "scannerHome = ${scannerHome}"
         withSonarQubeEnv() {
             if(config.isJavaProject){
-                withDockerContainer(args:'--network=sonarqube_default', image:"maven:3.5.0-jdk-8-alpine") { 
+                withDockerContainer(args:'--network=sonarqube_default', image:"maven:3.8.6-jdk-11-slim") { 
                     sh("mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -X")
                 }
             } else {
