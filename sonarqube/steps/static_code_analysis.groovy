@@ -11,7 +11,7 @@ void call(){
         withSonarQubeEnv() {
             if(config.isJavaProject){
                 withDockerContainer(args:'--network=sonarqube_default', image:"maven:3.8.6-jdk-11-slim") { 
-                    sh("mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -X")
+                    sh("mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -X -Dsonar.projectKey=${config.projectKey} -Dsonar.login=${config.token}")
                 }
             } else {
                 sh("${scannerHome}/bin/sonar-scanner")
