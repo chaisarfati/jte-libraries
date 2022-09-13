@@ -5,13 +5,13 @@ void call(){
     ls()
 	
     stage("Go: Build"){
-    	withDockerContainer(args: GOLANG_CONTAINER_ARGUMENT ,image: GOLANG_IMAGE){
+    	withDockerContainer(args: 'golang:latest' ,image: '-e GOCACHE=/tmp/'){
 		sh("go build")
     	}
     }
 	
     stage("Go: Test"){
-    	withDockerContainer(args: GOLANG_CONTAINER_ARGUMENT ,image: GOLANG_IMAGE){
+    	withDockerContainer(args: 'golang:latest' ,image: '-e GOCACHE=/tmp/'){
 		sh("go test")
     	}
     }
