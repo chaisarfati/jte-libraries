@@ -1,6 +1,6 @@
 void call(){
     stage("Docker: Containerization"){        
-        def imageName = config.imageName ? config.imageName : ${JOB_NAME}
+        def imageName = config.imageName ? config.imageName : env.JOB_NAME
         echo "imageName = ${imageName}"
         def pushedImageFullName = imageName + ((env.BRANCH_NAME == "master") ? "" : "${env.BRANCH_NAME}-") + env.BUILD_ID
         echo "pushedImageFullName = ${pushedImageFullName}"
